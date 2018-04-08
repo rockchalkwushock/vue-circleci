@@ -88,7 +88,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/vue-circleci
-      - run: sudo npm install now --global
+      - run: sudo npm install --global now
       - deploy: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
             url=$(now dist -t ${NOW_TOKEN} -n=vue-circleci --static 2>/dev/null)
