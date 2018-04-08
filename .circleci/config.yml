@@ -95,7 +95,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               url=$(now dist -t ${NOW_TOKEN} -n=vue-circleci --static 2>/dev/null)
               echo "Site deployed to ${url}."
-              now -t ${NOW_TOKEN} alias $url "vue-circleci"
+              echo $url
+              now alias -t ${NOW_TOKEN} $url "vue-circleci"
               echo "${url} aliased to https://vue-circleci.now.sh"
             elif [ "${CIRCLE_BRANCH}" == "development" ]; then
               url=$(now dist -t ${NOW_TOKEN} -n=vue-circleci --static 2>/dev/null)
