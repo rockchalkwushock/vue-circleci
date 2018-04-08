@@ -3,7 +3,7 @@ jobs:
   # Checkout code from Github, Install, & cache deps/devDeps.
   checkout_code:
     docker:
-      - image: circleci/node-browsers
+      - image: circleci/node:8.11-browsers
     working_directory: ~/vue-circleci
     steps:
       - checkout
@@ -24,7 +24,7 @@ jobs:
   # Run Eslint.
   linting:
     docker:
-      - image: circleci/node-browsers
+      - image: circleci/node:8.11-browsers
     working_directory: ~/vue-circleci
     steps:
       - attach_workspace:
@@ -33,7 +33,7 @@ jobs:
   # Run Jest Unit Tests
   unit_tests:
     docker:
-      - image: circleci/node-browsers
+      - image: circleci/node:8.11-browsers
     working_directory: ~/vue-circleci
     steps:
       - attach_workspace:
@@ -50,7 +50,7 @@ jobs:
   # Run NightWatch End-2-End Tests
   e2e_tests:
     docker:
-      - image: circleci/node-browsers
+      - image: circleci/node:8.11-browsers
     working_directory: ~/vue-circleci
     steps:
       - attach_workspace:
@@ -71,7 +71,7 @@ jobs:
   # Build the project
   build:
     docker:
-      - image: circleci/node-browsers
+      - image: circleci/node:8.11-browsers
     working_directory: ~/vue-circleci
     steps:
       - attach_workspace:
@@ -83,7 +83,7 @@ jobs:
   # Deploy the project using Now.
   deploy:
     docker:
-      - image: circleci/node-browsers
+      - image: circleci/node:8.11-browsers
     working_directory: ~/vue-circleci
     steps:
       - attach_workspace:
