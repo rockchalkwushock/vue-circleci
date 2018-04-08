@@ -81,7 +81,7 @@ jobs:
           root: .
           paths: .
   # Deploy the project using Now.
-  deploy:
+  deployment:
     docker:
       - image: circleci/node:8.11-browsers
     working_directory: ~/vue-circleci
@@ -89,20 +89,22 @@ jobs:
       - attach_workspace:
           at: ~/vue-circleci
       - run: sudo npm install --global now
-      - deploy: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            url=$(now dist -t ${NOW_TOKEN} -n=vue-circleci --static 2>/dev/null)
-            echo "Site deployed to ${url}."
-            now -t ${NOW_TOKEN} alias $url vue-circleci
-            echo "${url} aliased to https://vue-circleci.now.sh"
-          elif [ "${CIRCLE_BRANCH}" == "development" ]; then
-            url=$(now dist -t ${NOW_TOKEN} -n=vue-circleci --static 2>/dev/null)
-            echo "Site deployed to ${url}."
-            now -t ${NOW_TOKEN} alias $url vue-circleci-beta
-            echo "${url} aliased to https://vue-circleci-beta.now.sh"
-          else
-            echo "This failed miserably!"
-          fi
+      - deploy:
+          name: Deploy & Alias
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              url=$(now dist -t ${NOW_TOKEN} -n=vue-circleci --static 2>/dev/null)
+              echo "Site deployed to ${url}."
+              now -t ${NOW_TOKEN} alias $url vue-circleci
+              echo "${url} aliased to https://vue-circleci.now.sh"
+            elif [ "${CIRCLE_BRANCH}" == "development" ]; then
+              url=$(now dist -t ${NOW_TOKEN} -n=vue-circleci --static 2>/dev/null)
+              echo "Site deployed to ${url}."
+              now -t ${NOW_TOKEN} alias $url vue-circleci-beta
+              echo "${url} aliased to https://vue-circleci-beta.now.sh"
+            else
+              echo "This failed miserably!"
+            fi
 workflows:
   version: 2
   test_and_build:
@@ -127,7 +129,7 @@ workflows:
               only:
                 - develop
                 - master
-      - deploy:
+      - deployment:
           requires:
             - build
           filters:
