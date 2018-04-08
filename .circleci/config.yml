@@ -40,8 +40,8 @@ jobs:
           at: ~/vue-circleci
       - run: npm run unit
       - store_artifacts:
-        path: ./coverage/clover.xml
-        prefix: tests
+          path: ./coverage/clover.xml
+          prefix: tests
       - store_artifacts:
           path: coverage
           prefix: coverage
